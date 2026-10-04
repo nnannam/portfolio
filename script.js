@@ -269,7 +269,7 @@ if (!projectOpened) {
   const hints = hintCards.map(card => {
     const hint = document.createElement('span');
     hint.className = 'project-tap-hint';
-    hint.textContent = 'Нажмите, чтобы посмотреть проект ↗';
+    hint.textContent = 'Нажмите в любом месте карточки, чтобы посмотреть проект ↗';
     hint.setAttribute('aria-hidden', 'true');
     card.append(hint);
     return hint;
