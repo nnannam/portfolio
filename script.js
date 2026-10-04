@@ -258,3 +258,36 @@ window.addEventListener('scroll', hideProjectCursor, {passive:true});
 document.addEventListener('visibilitychange', () => { if (document.hidden) hideProjectCursor(); });
 projectCursorMedia.addEventListener('change', updateProjectCursorMode);
 updateProjectCursorMode();
+
+// Dismiss the mobile guidance across all project cards after the first visit.
+const projectHintKey = 'portfolio-project-opened';
+let projectOpened = false;
+try { projectOpened = localStorage.getItem(projectHintKey) === '1'; } catch {}
+const hintCards = [...document.querySelectorAll('a.project[href]')];
+const mobileHints = matchMedia('(max-width:850px)');
+if (!projectOpened) {
+  const hints = hintCards.map(card => {
+    const hint = document.createElement('span');
+    hint.className = 'project-tap-hint';
+    hint.textContent = 'Нажмите, чтобы посмотреть проект ↗';
+    hint.setAttribute('aria-hidden', 'true');
+    card.append(hint);
+    return hint;
+  });
+  const hintObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting && mobileHints.matches && !projectOpened) {
+        entry.target.querySelector('.project-tap-hint').classList.add('is-visible');
+      }
+    }
+  }, {threshold: 0.2});
+  hintCards.forEach(card => {
+    hintObserver.observe(card);
+    card.addEventListener('click', () => {
+      projectOpened = true;
+      try { localStorage.setItem(projectHintKey, '1'); } catch {}
+      hints.forEach(hint => hint.remove());
+      hintObserver.disconnect();
+    });
+  });
+}

@@ -363,3 +363,6 @@ body::before {
  .contact-phone .contact-action, .contact-phone .contact-arrow { display:block; }
  .contact-phone:has(.contact-action:hover), .contact-phone:has(.contact-action:focus-visible) { background:#e3b0df; box-shadow:none; }
 }
+
+.project-tap-hint{display:none}
+@media(max-width:850px){a.project{position:relative}.project-tap-hint.is-visible{display:block;position:absolute;top:14px;right:14px;left:auto;max-width:210px;padding:10px 14px;border-radius:16px;background:#fff;color:#333;font-size:12px;line-height:1.35;box-shadow:0 2px 12px #00000018;pointer-events:none;z-index:2}}
